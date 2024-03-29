@@ -5,7 +5,7 @@ export const makeRequest = async (
         method = 'GET',
         body = undefined
 ) => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('api_token')
     const headers = {
         Authorization: `Bearer ${token}`
     }

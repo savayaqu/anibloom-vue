@@ -15,7 +15,11 @@ defineProps({
     default: [],
     required: false
   },
-  multiple: Boolean
+  multiple: Boolean,
+  min: Number,
+  max: Number,
+
+
 })
 </script>
 
@@ -32,6 +36,8 @@ defineProps({
   :value="value"
   @input = "onChange"
   :placeholder="placeholder"
+      :min="min"
+      :max="max"
   :id="id">
 
   <ul v-if="errorMessage.length">

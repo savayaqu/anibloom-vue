@@ -4,16 +4,14 @@ import FormItem from "@/components/FormItem.vue";
 import {reactive, ref} from "vue";
 import Button from "@/components/Button.vue";
 import router from "@/router/index.js";
-import {authorization} from "@/api/methods/auth/authorization.js";
+import {login} from "@/api/methods/auth/login.js";
 import {useAuthStore} from "@/stores/auth.js";
 
 const  { setToken} = useAuthStore()
 
 const inputData = reactive({
-  email: '',
+  login: '',
   password: '',
-  first_name: '',
-  last_name: '',
 })
 
 const errors = reactive({
@@ -24,27 +22,26 @@ const errors = reactive({
 const isLoading = ref(false)
 
 const onSubmit = async () => {
-  isLoading.value = true
+  isLoading.value = true;
 
-  errors.message = ''
-  errors.data = {}
-  const data = await authorization(inputData.email, inputData.password)
-
-  isLoading.value = false
-
+  errors.data = {};
+  const data = await login(inputData.login, inputData.password);
+  isLoading.value = false;
 
   if (data?.code === 422) {
-    errors.data = data.message
-    return
+    errors.data = data.errors; // Обрабатываем поле `errors`
+    return;
   }
   if (data?.code === 401) {
-    errors.data = data.message
-    return
+    errors.data = data.errors; // Обрабатываем поле `errors`
+    return;
   }
-  setToken?.(data?.token)
-  await router.push({name: 'home'})
 
-}
+  console.log(data.data)
+  setToken?.(data?.data.api_token);
+  await router.push({ name: 'home' });
+};
+
 const  onInputChange = (field, event) => {
   const value = event.target.value
 
@@ -63,13 +60,13 @@ const  onInputChange = (field, event) => {
 
       <template v-else>
         <FormItem
-            id = "email"
-            label="Введите почту"
-            placeholder="Введите почту"
-            type="email"
-            :value="inputData.email"
-            :error-message="errors.data?.email"
-            @change="(event) => onInputChange('email', event)"
+            id = "login"
+            label="Введите логин"
+            placeholder="Введите логин"
+            type="text"
+            :value="inputData.login"
+            :error-message="errors.data?.login"
+            @change="(event) => onInputChange('login', event)"
         />
 
         <FormItem

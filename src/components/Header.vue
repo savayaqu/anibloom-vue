@@ -20,6 +20,9 @@ const handleLogout = async () => {
 <template>
 <header class="header">
   <ul class="list">
+    <li class="item">
+      <router-link to="/"><img class="img" src="/images/logo.png" alt="Логотип"></router-link>
+    </li>
     <template v-if="token">
       <li class="item">
         <Button @click="router.back()">Назад</Button>
@@ -50,7 +53,12 @@ const handleLogout = async () => {
 </template>
 
 <style scoped>
+.img {
+  width: 120px;
+  height: 120px;
+}
 .header {
+
   margin: 10px 0;
   padding: 10px 0;
   background-color: var(--secondary-bg);
@@ -58,7 +66,8 @@ const handleLogout = async () => {
 }
 .list {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 30px;
 justify-content: space-around;
   list-style-type: none;
 }

@@ -6,6 +6,8 @@ import LoginView from "@/views/LoginView.vue";
 import AccessesView from "@/views/AccessesView.vue";
 import EditFileView from "@/views/EditFileView.vue";
 import EditFileRightsView from "@/views/EditFileRightsView.vue";
+import Product from "@/views/Product.vue";
+import Review from "@/views/Review.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,6 +47,17 @@ const router = createRouter({
       name: 'rights',
       component: EditFileRightsView
     },
+    {
+      path: '/product/:id',
+      name: 'product',
+      component: Product
+    },
+    {
+      path: '/product/:id/review',
+      name: 'review',
+      component: Review
+    },
+
   ]
 })
 
