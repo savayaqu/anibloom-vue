@@ -1,77 +1,35 @@
 <script setup>
-import { getPayments } from "@/api/methods/profile/getPayments.js";
+import {onMounted, ref} from "vue";
+import {loadOrder} from "@/api/methods/loadOrder.js";
+import {getProduct} from "@/api/methods/product_categories/getProduct.js";
 import Button from "@/components/Button.vue";
-import Form from "@/components/Form.vue";
-import FormItem from "@/components/FormItem.vue";
-import {onMounted, reactive, ref} from "vue";
-import {checkout} from "@/api/methods/profile/checkout.js";
-
-const payments = ref([]);
-const data = reactive({
-  newAddress: '',
-  newPayment: '',
-  isLoading: false,
-  successMessage: '',
-  errorMessage: '',
-  errorMessages: [],
-});
-
-const handleAddress = (e) => data.newAddress = e.target.value;
-const handlePaymentId = (e) => data.newPayment = e.target.value;
-const handleCheckout = async () => {
-  data.successMessage = '';
-  data.errorMessage = '';
-  data.isLoading = true;
-
-  try {
-    const response = await checkout(data.newAddress, data.newPayment);
-    if (response.code === 422) {
-      data.errorMessages = response.errors;
-      return;
-    }
-    if (response.code === 401) {
-      data.errorMessages = response.message;
-      return;
-    }
-    data.successMessage = 'Успех';
-  } catch (e) {
-    console.error(e);
-  } finally {
-    data.isLoading = false;
-  }
-};
-
+import {URL_PHOTO} from "@/config/index.js";
+import router from "@/router/index.js";
+const ocp = ref([])
 onMounted(async () => {
-  try {
-    const response = await getPayments();
-    payments.value = response.data;
-  } catch (error) {
-    console.error('Ошибка при загрузке продукта:', error);
-  }
-});
+  ocp.value = await loadOrder()
+})
+const handleGetProduct = async (fileId) =>
+    router.push({name: 'product', params: {id: fileId}})
+
 </script>
 
 <template>
-  <div>
-    <h3>Адрес доставки</h3>
-    <input @input="handleAddress" v-model="data.newAddress" id="address" name="address" type="text">
+<h2>Заказы: </h2>
+  <div v-for="item in ocp" :key="item.order.id" class="order">
+    <p>Дата оформления заказа: {{ item.order.dateOrder }}</p>
+    <p>Адрес доставки: {{ item.order.address }}</p>
+    <p>Способ оплаты: {{item.paymentName}}</p>
+    <p>Статус заказа: {{item.statusName}}</p>
+    <p>Товары:</p>
+    <div v-for="(compound, index) in item.compound" :key="index" class="product" style="display: flex; flex-direction: row; column-gap: 40px" >
+      <img :src="URL_PHOTO + '/storage/' + item.products[index].photo" :alt="item.products[index].name" style="object-fit: cover; width: 100px; height: auto;">
+      <p>{{ item.products[index].name }}</p>
+      <p>Количество: {{ compound.quantity }}</p>
+      <p>Общая цена: {{ compound.total }} руб</p>
+      <Button @click="handleGetProduct(item.products[index].id)">Оставить отзыв</Button>
+    </div>
   </div>
-  <div>
-    <h3>Способ оплаты</h3>
-    <Form method="POST" :submit="handleCheckout">
-      <FormItem
-          v-for="payment in payments"
-          :key="payment.id"
-          @input="handlePaymentId"
-          type="radio"
-          :label="payment.name"
-          :value="payment.id"
-          :checked="data.newPayment === payment.id"
-          :error-message="data.errorMessages?.radio"
-      ></FormItem>
-    </Form>
-  </div>
-  <Button :disabled="data.isLoading" @click="handleCheckout">Оформить заказ</Button>
 </template>
 
 <style scoped>

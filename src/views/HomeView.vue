@@ -24,7 +24,7 @@
           </div>
         </div>
       </div>
-      <Button @click="loadCategoryProducts(category.id, category.name)" style="font-size: 24px; background: #AE445A; box-shadow: #662549 0 5px 5px; border: #662549 2px solid; color: white; text-decoration: none; display: flex; justify-content: center; width: 500px; height: 75px; border-radius: 10px; text-align: center; font-weight: 600; margin: 0 auto;">Просмотреть все товары категории "{{category.name}}"</Button>
+      <Button @click="handleGetProducts(category.id)" style="font-size: 24px; background: #AE445A; box-shadow: #662549 0 5px 5px; border: #662549 2px solid; color: white; text-decoration: none; display: flex; justify-content: center; width: 500px; height: 75px; border-radius: 10px; text-align: center; font-weight: 600; margin: 0 auto;">Просмотреть все товары категории "{{category.name}}"</Button>
     </div>
     <div style="margin: 30px;">
       <h2 style="font-weight: 700; font-size: 32px; text-align: center;">ANIBLOOM - магазин аниме, манги, кружек, милых приятностей и значков со всего мира.</h2>
@@ -43,9 +43,11 @@ import {API_URL, URL_PHOTO} from "@/config/index.js";
 import Button from "@/components/Button.vue";
 import router from "@/router/index.js";
 
+const handleGetProducts = async (categoryId) =>
+    router.push({name: 'products', params: {id: categoryId}})
 
-const handleGetProduct = async (fileId) =>
-    router.push({name: 'product', params: {id: fileId}})
+const handleGetProduct = async (productId) =>
+    router.push({name: 'product', params: {id: productId}})
 
 const categories = reactive([]);
 

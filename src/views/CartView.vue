@@ -5,7 +5,7 @@ import {onMounted, reactive, ref} from "vue";
 import {updateCart} from "@/api/methods/profile/updateCart.js";
 import {deleteCartItem} from "@/api/methods/profile/deleteCartItem.js";
 import Button from "@/components/Button.vue";
-import OrderView from "@/views/OrderView.vue";
+import OrderView from "@/views/CreateOrderView.vue";
 const cartItems = reactive({
   total: 0,
   items: []
