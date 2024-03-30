@@ -6,8 +6,10 @@ import LoginView from "@/views/LoginView.vue";
 import AccessesView from "@/views/AccessesView.vue";
 import EditFileView from "@/views/EditFileView.vue";
 import EditFileRightsView from "@/views/EditFileRightsView.vue";
-import Product from "@/views/Product.vue";
-import Review from "@/views/Review.vue";
+import Product from "@/views/ProductView.vue";
+import Review from "@/views/ReviewView.vue";
+import Profile from "@/views/ProfileView.vue";
+import Cart from "@/views/CartView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,6 +58,16 @@ const router = createRouter({
       path: '/product/:id/review',
       name: 'review',
       component: Review
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile
+    },
+    {
+      path: '/cart',
+      name: 'cart',
+      component: Cart
     },
 
   ]

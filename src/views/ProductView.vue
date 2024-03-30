@@ -10,13 +10,12 @@
 </template>
 
 <script setup>
-import { getProduct } from "@/api/methods/product_categories/getProduct.js";
+import {addToCart} from "@/api/methods/product_categories/addToCart.js";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import Button from "@/components/Button.vue";
-import Review from "@/views/Review.vue";
+import Review from "@/views/ReviewView.vue";
 import {URL_PHOTO} from "@/config/index.js"; // Подключаем компонент Review
-
 const router = useRouter();
 const productId = router.currentRoute.value.params.id;
 const product = ref({});

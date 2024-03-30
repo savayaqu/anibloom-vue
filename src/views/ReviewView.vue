@@ -30,7 +30,7 @@ const handleAddReview = async () => {
   } else {
     if (response.code === 422 || response.code === 401) {
       data.errorMessages = response.errors || {};
-    } else if (response.code === 404) {
+    } else if (response.code === 404 || response.code === 403) {
       data.errorMessage = response.message;
     }
   }

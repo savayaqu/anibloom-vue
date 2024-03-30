@@ -49,6 +49,7 @@ const handleGetProduct = async (fileId) =>
 
 const categories = reactive([]);
 
+import {addToCart} from "@/api/methods/product_categories/addToCart.js";
 const loadCategories = async () => {
   try {
     const response = await getCategories();

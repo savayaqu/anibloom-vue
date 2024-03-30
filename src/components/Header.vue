@@ -28,13 +28,10 @@ const handleLogout = async () => {
         <Button @click="router.back()">Назад</Button>
       </li>
       <li class="item">
-        <router-link to="/">Список загруженных файлов</router-link>
+        <router-link to="/profile"><img class="img-icon" src="/images/user.png" alt="Профиль"></router-link>
       </li>
       <li class="item">
-        <router-link to="/upload">Загрузка файлов</router-link>
-      </li>
-      <li class="item">
-        <router-link to="/accesses">Список доступных файлов</router-link>
+        <router-link to="/cart"><img class="img-icon" src="/images/cart.png" alt="Корзина"></router-link>
       </li>
       <li class="item">
         <Button @click="handleLogout()">Выход</Button>
@@ -77,5 +74,9 @@ justify-content: space-around;
 }
 .item a:hover {
 color: var(--color-pink);
+}
+.img-icon {
+  height: 30px;
+  width: 30px;
 }
 </style>
