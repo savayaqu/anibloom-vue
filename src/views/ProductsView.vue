@@ -7,32 +7,47 @@ import {URL_PHOTO} from "@/config/index.js";
 import Button from "@/components/Button.vue";
 import {addToCart} from "@/api/methods/product_categories/addToCart.js";
 import {getCategories} from "@/api/methods/product_categories/getCategories.js";
+import {loadOrder} from "@/api/methods/loadOrder.js";
+import Loading from "@/components/Loading.vue";
 
 const selectedCategory = ref({})
 const categoryProducts = ref([])
 const categories = reactive([])
-
+const isLoading = ref()
 const router = useRouter();
 const categoryId = router.currentRoute.value.params.id;
 
 const getSelectedCategory = async () => {
-  const response = await getCategories()
-  categories.value = response.data
-  console.log(categories.value)
-  console.log(categoryId)
-  selectedCategory.value = categories.value.find(cat => cat.id === Number(categoryId))
-  console.log(selectedCategory.value)
+  isLoading.value = true
+  try {
+    const response = await getCategories()
+    categories.value = response.data
+    selectedCategory.value = categories.value.find(cat => cat.id === Number(categoryId))
+  }catch (e) {
+    console.log(e)
+  } finally {
+    isLoading.value = false
+  }
+
 }
 const handleGetProduct = async (productId) =>
     router.push({name: 'product', params: {id: productId}})
 
 onMounted(async () => {
   await getSelectedCategory()
-  categoryProducts.value = await getCategoryProducts(categoryId)
+  isLoading.value = true
+  try {
+    categoryProducts.value = await getCategoryProducts(categoryId)
+  }catch (e) {
+    console.log(e)
+  } finally {
+    isLoading.value = false
+  }
 })
 </script>
 
 <template>
+  <Loading v-if="isLoading"></Loading>
   <h2>Товары в категории "{{selectedCategory.name}}"</h2>
   <div v-if="categoryProducts.length === 0">
     <p>Нет товаров в данной категории</p>

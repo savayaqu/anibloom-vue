@@ -6,23 +6,28 @@ import {updateCart} from "@/api/methods/profile/updateCart.js";
 import {deleteCartItem} from "@/api/methods/profile/deleteCartItem.js";
 import Button from "@/components/Button.vue";
 import OrderView from "@/views/CreateOrderView.vue";
+import Loading from "@/components/Loading.vue";
+import CreateOrderView from "@/views/CreateOrderView.vue";
 const cartItems = reactive({
   total: 0,
   items: []
 })
 const totalPrice = ref(0)
-
+const isLoading = ref()
 const handleGetCart = async () => {
+  isLoading.value = true
   try {
     const data = await getCart()
     cartItems.items = data.cart_items
     totalPrice.value = data.total
-  } catch (error) {
-    console.error('Ошибка:', error)
+  } catch (e) {
+    console.log(e)
+  } finally {
+    isLoading.value = false
   }
 }
 
-onMounted(async () => handleGetCart())
+onMounted(async () => await handleGetCart())
 
 
 const data = reactive({
@@ -59,6 +64,7 @@ const handleUpdateCart = async (productId, quantity) => {
 </script>
 
 <template>
+  <Loading v-if="isLoading"></Loading>
   <div v-if="!cartItems.items.length">
     <h2>Ваша корзина пуста</h2>
   </div>
@@ -75,9 +81,9 @@ const handleUpdateCart = async (productId, quantity) => {
         </Button>
       </div>
       <div><b>Общая стоимость: {{totalPrice}}</b></div>
-      <OrderView></OrderView>
 
     </div>
+    <CreateOrderView></CreateOrderView>
 
   </div>
 

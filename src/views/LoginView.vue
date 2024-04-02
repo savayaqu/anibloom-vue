@@ -79,7 +79,7 @@ const  onInputChange = (field, event) => {
             @change="(event) => onInputChange('password', event)"
         />
         <Button @submit.prevent="onSubmit" type="submit">Войти</Button>
-      </template>
+      </template v-else>
 
     </Form>
   </main>

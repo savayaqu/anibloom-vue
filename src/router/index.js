@@ -1,17 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import RegisterView from "@/views/RegisterView.vue";
-import UploadView from "@/views/UploadView.vue";
 import LoginView from "@/views/LoginView.vue";
-import AccessesView from "@/views/AccessesView.vue";
-import EditFileView from "@/views/EditFileView.vue";
-import EditFileRightsView from "@/views/EditFileRightsView.vue";
 import Product from "@/views/ProductView.vue";
 import Review from "@/views/ReviewView.vue";
 import Profile from "@/views/ProfileView.vue";
 import Cart from "@/views/CartView.vue";
-import CategoryView from "@/views/ProductsView.vue";
 import ProductsView from "@/views/ProductsView.vue";
+import AdminView from "@/views/AdminView.vue";
+import EditProductView from "@/views/EditProductView.vue";
+import CreateProductView from "@/views/CreateProductView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,11 +20,6 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/upload',
-      name: 'upload',
-      component: UploadView
-    },
-    {
       path: '/register',
       name: 'register',
       component: RegisterView
@@ -35,21 +28,6 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginView
-    },
-    {
-      path: '/accesses',
-      name: 'accesses',
-      component: AccessesView
-    },
-    {
-      path: '/edit/:id',
-      name: 'edit',
-      component: EditFileView
-    },
-    {
-      path: '/rights/:id',
-      name: 'rights',
-      component: EditFileRightsView
     },
     {
       path: '/product/:id',
@@ -75,6 +53,21 @@ const router = createRouter({
       path: '/category/:id',
       name: 'products',
       component: ProductsView
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: AdminView
+    },
+    {
+      path: '/admin/product/:id/edit',
+      name: 'EditProduct',
+      component: EditProductView
+    },
+    {
+      path: '/admin/product/create',
+      name: 'CreateProduct',
+      component: CreateProductView
     },
   ]
 })

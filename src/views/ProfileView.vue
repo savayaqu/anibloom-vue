@@ -1,11 +1,40 @@
 <script setup>
 
 import OrderView from "@/views/OrderView.vue";
-import Button from "@/components/Button.vue";
+import {onMounted, ref} from "vue";
+import {getProfile} from "@/api/methods/profile/getProfile.js";
+import {getProduct} from "@/api/methods/product_categories/getProduct.js";
+import Loading from "@/components/Loading.vue";
+const isLoading = ref()
+const profile = ref([])
+onMounted(async () => {
+  isLoading.value = true
+  try {
+    const response = await getProfile()
+    profile.value = response.data
+  }catch (e) {
+    console.log(e)
+  }finally {
+    isLoading.value = false
+  }
+
+
+})
 </script>
 
 <template>
-  <Button>Изменить данные</Button>
+  <Loading v-if="isLoading"></Loading>
+<div>
+  <h2>Пользовательские данные</h2>
+  <div>
+    <p>Фамилия: {{profile.surname}}</p>
+    <p>Имя: {{profile.name}}</p>
+    <p>Отчество: {{profile.patronymic}}</p>
+    <p>Эл. почта: {{profile.email}}</p>
+    <p>Телефон: {{profile.telephone}}</p>
+    <p>Дата рождения: {{profile.birth}}</p>
+  </div>
+</div>
 <OrderView></OrderView>
 </template>
 

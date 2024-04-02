@@ -1,13 +1,21 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import {loadOrder} from "@/api/methods/loadOrder.js";
-import {getProduct} from "@/api/methods/product_categories/getProduct.js";
 import Button from "@/components/Button.vue";
 import {URL_PHOTO} from "@/config/index.js";
 import router from "@/router/index.js";
+import Loading from "@/components/Loading.vue";
+const isLoading = ref()
 const ocp = ref([])
 onMounted(async () => {
-  ocp.value = await loadOrder()
+  isLoading.value = true
+  try {
+    ocp.value = await loadOrder()
+  }catch (e) {
+    console.log(e)
+  } finally {
+    isLoading.value = false
+  }
 })
 const handleGetProduct = async (fileId) =>
     router.push({name: 'product', params: {id: fileId}})
@@ -15,6 +23,7 @@ const handleGetProduct = async (fileId) =>
 </script>
 
 <template>
+  <Loading v-if="isLoading"></Loading>
 <h2>Заказы: </h2>
   <div v-for="item in ocp" :key="item.order.id" class="order">
     <p>Дата оформления заказа: {{ item.order.dateOrder }}</p>

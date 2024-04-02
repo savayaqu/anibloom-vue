@@ -10,8 +10,8 @@ const payments = ref([]);
 const data = reactive({
   newAddress: '',
   newPayment: '',
-  isLoading: false,
 });
+const isLoading = ref()
 
 const handleAddress = (e) => data.newAddress = e.target.value;
 const handlePaymentId = (e) => data.newPayment = e.target.value;
@@ -21,7 +21,7 @@ const errors = reactive({
 })
 const handleCheckout = async () => {
   errors.data = {}
-
+  isLoading.value = true
 
   try {
     const response = await checkout(data.newAddress, data.newPayment);
@@ -38,16 +38,20 @@ const handleCheckout = async () => {
   } catch (e) {
     console.error(e);
   } finally {
-    data.isLoading = false;
+    isLoading.value = false
   }
 };
 
 onMounted(async () => {
+  isLoading.value = true
   try {
     const response = await getPayments();
     payments.value = response.data;
-  } catch (error) {
-    console.error('Ошибка при загрузке продукта:', error);
+  } catch (e) {
+    console.log(e)
+  }
+  finally {
+    isLoading.value = false
   }
 });
 </script>
@@ -56,8 +60,7 @@ onMounted(async () => {
   <div>
     <h3>Адрес доставки</h3>
     <FormItem
-        @input="handleAddress"
-        v-model="data.newAddress"
+        @change="handleAddress"
         id="address"
         name="address"
         type="text"
@@ -67,16 +70,10 @@ onMounted(async () => {
   <div>
     <h3>Способ оплаты</h3>
     <Form method="POST" :submit="handleCheckout">
-      <FormItem
-          v-for="payment in payments"
-          :key="payment.id"
-          @input="handlePaymentId"
-          type="radio"
-          :label="payment.name"
-          :value="payment.id"
-          :checked="data.newPayment === payment.id"
-          :error-message="errors.data?.payment_id"
-      ></FormItem>
+      <div v-for="payment in payments">
+        <input type="radio" :id="payment.name" name="payment" @change="handlePaymentId" :value="payment.id">
+        <label :for="payment.name">{{payment.name}}</label>
+      </div>
     </Form>
   </div>
   <Button :disabled="data.isLoading" @click="handleCheckout">Оформить заказ</Button>
