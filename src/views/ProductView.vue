@@ -25,7 +25,7 @@ onMounted(async () => {
 });
 </script>
 <template>
-
+<Loading v-if="isLoading"></Loading>
   <section>
     <h3>{{ product.name }}</h3>
     <img :src=" URL_PHOTO + '/storage/' + product.photo" :alt="product.name" style="width: 250px; height: 272px;">

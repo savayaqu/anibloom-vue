@@ -38,7 +38,6 @@ const handleCreateProduct = async () => {
   if (photoFile) {
     formData.append('photo', photoFile);
   }
-
 try {
   // Отправка данных на сервер
   const  response =  await createProduct(formData);
@@ -47,7 +46,14 @@ try {
     console.log(e)
 } finally {
   isLoading.value = false
-  await router.push({name: 'admin'})
+
+  document.getElementById('PrName').value = ''
+  document.getElementById('PrDesc').value = ''
+  document.getElementById('PrPrice').value = ''
+  document.getElementById('PrQuan').value = ''
+  document.getElementById('PrCategoryId').value = ''
+  document.getElementById('PrPhoto').value = null
+
 }
 
 

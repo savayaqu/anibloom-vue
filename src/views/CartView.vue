@@ -83,7 +83,7 @@ const handleUpdateCart = async (productId, quantity) => {
       <div><b>Общая стоимость: {{totalPrice}}</b></div>
 
     </div>
-    <CreateOrderView></CreateOrderView>
+    <CreateOrderView :handleGetCart="handleGetCart"></CreateOrderView>
 
   </div>
 

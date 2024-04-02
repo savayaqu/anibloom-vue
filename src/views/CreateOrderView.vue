@@ -5,6 +5,7 @@ import Form from "@/components/Form.vue";
 import FormItem from "@/components/FormItem.vue";
 import {onMounted, reactive, ref} from "vue";
 import {checkout} from "@/api/methods/profile/checkout.js";
+import router from "@/router/index.js";
 
 const payments = ref([]);
 const data = reactive({
@@ -19,26 +20,26 @@ const errors = reactive({
   data: {},
   message: ''
 })
-const handleCheckout = async () => {
-  errors.data = {}
-  isLoading.value = true
+// Добавляем свойство onCheckoutOrder
+const { onCheckoutOrder, handleGetCart } = defineProps(['onCheckoutOrder', 'handleGetCart']);
 
+// Обработка события checkoutOrder
+const handleCheckout = async () => {
+  isLoading.value = true;
   try {
     const response = await checkout(data.newAddress, data.newPayment);
-    console.log(response.errors)
-    if (response.code === 422) {
-      errors.data = response.errors;
+    if (response.code === 422 || response.code === 401) {
+      errors.value.data = response.errors;
       return;
     }
-    if (response.code === 401) {
-      errors.data = response.errors;
-      return;
+    // Вызываем переданную функцию handleGetCart
+    if (typeof handleGetCart === 'function') {
+      handleGetCart();
     }
-    data.successMessage = 'Успех';
   } catch (e) {
     console.error(e);
   } finally {
-    isLoading.value = false
+    isLoading.value = false;
   }
 };
 
@@ -76,7 +77,7 @@ onMounted(async () => {
       </div>
     </Form>
   </div>
-  <Button :disabled="data.isLoading" @click="handleCheckout">Оформить заказ</Button>
+  <Button :ref="handleGetCart" @click="handleCheckout">Оформить заказ</Button>
 </template>
 
 <style scoped>

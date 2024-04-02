@@ -70,7 +70,6 @@ const  handleEditProduct = async (item) => {
   } finally {
     await load()
     isLoading.value = false
-    await router.push({name: 'admin'})
   }
 }
 const handleDeleteProduct = async () => {

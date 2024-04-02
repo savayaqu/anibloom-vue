@@ -5,7 +5,6 @@ import Form from "@/components/Form.vue";
 import FormItem from "@/components/FormItem.vue";
 import { addReview } from "@/api/methods/product_categories/reviews/addReview.js";
 import { getReviews } from "@/api/methods/product_categories/reviews/getReviews.js";
-import Loading from "@/components/Loading.vue";
 
 const props = defineProps(['productId']);
 const productId = ref(props.productId);
@@ -23,39 +22,21 @@ const handleAddReview = async () => {
   isLoading.value = true
   data.errorMessages = {};
   data.errorMessage = '';
-  try {
-    const response = await addReview(productId.value, data.newRating, data.newText);
-    if (response.success) {
-      data.successMessage = 'Отзыв успешно добавлен';
-      await loadReviews(); // Обновляем отзывы после успешного добавления
-    } else {
-      if (response.code === 422 || response.code === 401) {
-        data.errorMessages = response.errors || {};
-      } else if (response.code === 404 || response.code === 403) {
-        data.errorMessage = response.message;
-      }
+  const response = await addReview(productId.value, data.newRating, data.newText);
+  if (response.success) {
+    data.successMessage = 'Отзыв успешно добавлен';
+    await loadReviews(); // Обновляем отзывы после успешного добавления
+  } else {
+    if (response.code === 422 || response.code === 401) {
+      data.errorMessages = response.errors || {};
+    } else if (response.code === 404 || response.code === 403) {
+      data.errorMessage = response.message;
     }
-  } catch (e) {
-    console.log(e)
-  } finally {
-    isLoading.value = false
   }
-
-
-
 };
 
 const loadReviews = async () => {
-  isLoading.value = true
-  try {
-    reviews.value = await getReviews(productId.value);
-
-  } catch (e) {
-    console.log(e);
-  }
-  finally {
-    isLoading.value = false
-  }
+  reviews.value = await getReviews(productId.value);
 };
 const changeText = (e) => data.newText = e.target.value
 const changeRating = (e) => data.newRating = e.target.value
@@ -64,7 +45,6 @@ onMounted(async () => await loadReviews())
 </script>
 
 <template>
-  <Loading v-if="isLoading"></Loading>
   <b>Отзывы о товаре:</b>
   <section>
     <div v-if="reviews.length === 0">Отзывов пока нет</div>

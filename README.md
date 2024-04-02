@@ -1,5 +1,5 @@
 # vue-project
-
+<img style="height: 50em" src="public/anim.gif" alt="anim"> <br>
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
