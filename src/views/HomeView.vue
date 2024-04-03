@@ -74,7 +74,7 @@ onMounted(async () => {
               <div @click="handleGetProduct(product.id)">
                 <img style="width: 235px; height: 270px;" :src="URL_PHOTO + '/storage/' + product.photo" :alt="product.name">
                 <p style="text-align: left;  -webkit-line-clamp: 1; display: -webkit-box;  -webkit-box-orient: vertical; overflow: hidden; margin-top: 13px; color: #333333; height:22px; font-size: 16px; font-weight: 600;">{{ product.name }}</p>
-                <p style="text-align: left; overflow: hidden; -webkit-line-clamp: 4; display: -webkit-box; -webkit-box-orient: vertical; margin-top: 5px; color: #333333; height: 75px; font-size: 12px; font-weight: 600;">{{ product.description }}</p>
+                <p style="text-align: left; overflow: hidden; -webkit-line-clamp: 4; display: -webkit-box; -webkit-box-orient: vertical; margin-top: 5px; color: #333333; height: 75px; font-size: 12px; font-weight: 600;">{{product.description}}</p>
               </div>
               <div style="margin-top: -15px;">
                 <strong style="margin-top: 86px; color: #333333; font-size: 28px; font-weight: 800">{{ product.price }} руб</strong>
@@ -95,5 +95,32 @@ onMounted(async () => {
     </div>
   </section>
 </template>
+<style scoped>
+.end {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  margin: 20px;
+  color: #333333;
+}
+.category {
+  box-shadow: 0 5px 15px black;
+  border-radius: 10px;
+  background: #AE445A;
+  color: white;
+}
+.category2 {
+  color: black;
+  font-size: 32px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  font-weight: 400;
+}
+.category2:hover {
+  color: grey;
+}
+</style>
 
 

@@ -80,13 +80,12 @@ const handleProductClick = async (productId) => {
         <router-link to="/"><img class="img" src="/images/logo.png" alt="Логотип"></router-link>
       </li>
       <li class="item">
-        <input label="поиск" v-model="searchQuery" @input="handleInputChange">
+        <input placeholder="Поиск..." v-model="searchQuery" @input="handleInputChange">
         <div class="header__search" v-show="filteredProducts.length > 0">
-          <ul>
-            <li @click="handleProductClick(product.id)" v-for="product in filteredProducts" :key="product.id">
+          <ul class="products">
+            <li class="list_products" @click="handleProductClick(product.id)" v-for="product in filteredProducts" :key="product.id">
               {{product.name}}
             </li>
-
           </ul>
         </div>
       </li>
@@ -100,7 +99,7 @@ const handleProductClick = async (productId) => {
         <li class="item">
           <router-link to="/cart"><img class="img-icon" src="/images/cart.png" alt="Корзина"></router-link>
         </li>
-        <li class="item" v-if="isAdmin === true">
+        <li class="item" v-if="isAdmin">
           <router-link to="/admin"><img class="img-icon" src="/images/admin.png" alt="Админ-панель"></router-link>
         </li>
         <li class="item">
@@ -126,11 +125,19 @@ const handleProductClick = async (productId) => {
   width: 120px;
   height: 120px;
 }
-.header {
-  margin: 10px 0;
-  padding: 10px 0;
-  background-color: var(--secondary-bg);
+input {
+  width: 270px;
+  height: 30px;
   border-radius: 10px;
+  border: none;
+  font-size: 24px;
+}
+.products {
+  list-style: none;
+  width: 250px;
+}
+.list_products {
+  margin-top: 5px;
 }
 .header__search {
   position: relative;

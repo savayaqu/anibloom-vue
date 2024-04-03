@@ -16,8 +16,10 @@ import Footer from "@/components/Footer.vue";
 <style scoped>
 
 .container {
-  margin: 0 auto;
-  max-width: 1440px;
-  padding: 0 10px;
+  max-width: 1170px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 </style>
