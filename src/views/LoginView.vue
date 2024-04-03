@@ -6,8 +6,9 @@ import Button from "@/components/Button.vue";
 import router from "@/router/index.js";
 import {login} from "@/api/methods/auth/login.js";
 import {useAuthStore} from "@/stores/auth.js";
+import Loading from "@/components/Loading.vue";
 
-const  { setToken} = useAuthStore()
+const { setToken} = useAuthStore()
 
 const inputData = reactive({
   login: '',
@@ -30,19 +31,21 @@ const onSubmit = async () => {
 
   if (data?.code === 422) {
     errors.data = data.errors; // Обрабатываем поле `errors`
+    inputData.login = ''
+    inputData.password = ''
     return;
   }
   if (data?.code === 401) {
-    errors.data = data.errors; // Обрабатываем поле `errors`
+    errors.message = data.message; // Обрабатываем поле `errors`
+    inputData.login = ''
+    inputData.password = ''
     return;
   }
-
-  console.log(data.data)
   setToken?.(data?.data.api_token);
   await router.push({ name: 'home' });
 };
 
-const  onInputChange = (field, event) => {
+const onInputChange = (field, event) => {
   const value = event.target.value
 
   errors.data[field] = []
@@ -55,9 +58,7 @@ const  onInputChange = (field, event) => {
     <h1>Авторизация</h1>
 
     <Form :submit="onSubmit" method="POST">
-      <p v-if="errors.message">Неправильные данные для входа</p>
-      <p v-if="isLoading">Загрузка...</p>
-
+      <Loading v-if="isLoading"></Loading>
       <template v-else>
         <FormItem
             id = "login"
@@ -79,8 +80,8 @@ const  onInputChange = (field, event) => {
             @change="(event) => onInputChange('password', event)"
         />
         <Button @submit.prevent="onSubmit" type="submit">Войти</Button>
-      </template v-else>
-
+        <p v-if="errors.message">{{errors.message}}</p>
+      </template>
     </Form>
   </main>
 </template>

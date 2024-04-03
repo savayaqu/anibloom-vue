@@ -33,7 +33,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(118, 135, 163, 100%);
+  background: linear-gradient(90deg,rgba(243,159,90,1) 20%, rgba(232,188,185,1) 100%);
   display: flex;
   justify-content: center;
   align-items: center;
