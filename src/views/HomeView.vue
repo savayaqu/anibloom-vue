@@ -7,7 +7,7 @@ import Button from "@/components/Button.vue";
 import router from "@/router/index.js";
 
 const isLoading = ref()
-
+const token = localStorage.getItem('api_token')
 const handleGetProducts = async (categoryId) =>
     router.push({name: 'products', params: {id: categoryId}})
 
@@ -33,7 +33,23 @@ const loadCategories = async () => {
     isLoading.value = false
   }
 };
+const handleAddToCard = async (productId) => {
+  if (token != null) {
+    const response = await addToCart(productId)
+    alert(response.message)
 
+  }
+  else {
+    alert("Авторизируйся, сучара!!!")
+
+  }
+  console.log(token)
+  if (!token) {
+
+  }
+  else {
+  }
+}
 const loadCategoryProducts = async (categoryId, categoryName) => {
   isLoading.value = true
   try {
@@ -73,18 +89,18 @@ onMounted(async () => {
             <div style="margin: 11px; display: flex; flex-direction: column;">
               <div @click="handleGetProduct(product.id)">
                 <img style="width: 235px; height: 270px;" :src="URL_PHOTO + '/storage/' + product.photo" :alt="product.name">
-                <p style="text-align: left;  -webkit-line-clamp: 1; display: -webkit-box;  -webkit-box-orient: vertical; overflow: hidden; margin-top: 13px; color: #333333; height:22px; font-size: 16px; font-weight: 600;">{{ product.name }}</p>
-                <p style="text-align: left; overflow: hidden; -webkit-line-clamp: 4; display: -webkit-box; -webkit-box-orient: vertical; margin-top: 5px; color: #333333; height: 75px; font-size: 12px; font-weight: 600;">{{product.description}}</p>
+                <p class="p1">{{ product.name }}</p>
+                <p class="p2">{{product.description}}</p>
               </div>
-              <div style="margin-top: -15px;">
+              <div style="margin-top: 45px;">
                 <strong style="margin-top: 86px; color: #333333; font-size: 28px; font-weight: 800">{{ product.price }} руб</strong>
-                <Button v-if="product.quantity > 0" style="margin: 0 auto; background: #AE445A; box-shadow: #662549 0 5px 5px; border: #662549 2px solid; border-radius: 10px; width: 235px; height: 40px; color: white; font-size: 16px;" @click="addToCart(product.id)">В корзину</Button>
+                <Button v-if="product.quantity > 0" class="button" style="margin: 0 auto; background: #AE445A; border-radius: 10px; width: 235px; height: 40px; color: white; font-size: 16px;" @click="handleAddToCard(product.id)">В корзину</Button>
                 <Button v-else style="margin: 0 auto; background: #f39f5a; border: white 2px solid; border-radius: 10px; width: 235px; height: 40px; color: white; font-size: 16px;" disabled>Нет в наличии</Button>
               </div>
             </div>
           </div>
         </div>
-        <Button @click="handleGetProducts(category.id)" style="font-size: 24px; background: #AE445A; box-shadow: #662549 0 5px 5px; border: #662549 2px solid; color: white; text-decoration: none; display: flex; justify-content: center; width: 500px; height: 75px; border-radius: 10px; text-align: center; font-weight: 600; margin: 0 auto;">Просмотреть все товары категории "{{category.name}}"</Button>
+        <Button @click="handleGetProducts(category.id)" class="show">Просмотреть все товары категории "{{category.name}}"</Button>
       </div>
     </template>
     <div style="margin: 30px;">
@@ -103,11 +119,54 @@ onMounted(async () => {
   margin: 20px;
   color: #333333;
 }
+.button {
+  border: #662549 2px solid;
+  box-shadow: #662549 0 5px 5px;
+}
+.show {
+  font-size: 24px;
+  background: #AE445A;
+  box-shadow: #662549 0 5px 5px;
+  border: #662549 2px solid;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  width: 500px;
+  height: 75px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 600;
+  margin: 0 auto;
+  transition: .15s linear all;
+}
+.show:hover {
+  font-size: 24px;
+  background: #AE445A;
+  box-shadow: #f39f5a 0 5px 5px;
+  border: #f39f5a 2px solid;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  width: 500px;
+  height: 75px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 600;
+  margin: 0 auto;
+}
+.button:hover {
+  border: #f39f5a 2px solid;
+  box-shadow: #f39f5a 0 5px 5px;
+}
 .category {
   box-shadow: 0 5px 15px black;
   border-radius: 10px;
   background: #AE445A;
   color: white;
+  height: 30px;
+  font-size: 24px;
 }
 .category2 {
   color: black;
@@ -117,9 +176,34 @@ onMounted(async () => {
   justify-content: center;
   text-align: center;
   font-weight: 400;
+  transition: .15s linear all;
 }
 .category2:hover {
   color: grey;
+}
+.p1 {
+  text-align: left;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 13px;
+  color: #333333;
+  height: 16px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.p2 {
+  text-align: left;
+  overflow: hidden;
+  -webkit-line-clamp: 4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  margin-top: 5px;
+  color: #333333;
+  height: 52px;
+  font-size: 12px;
+  font-weight: 600;
 }
 </style>
 

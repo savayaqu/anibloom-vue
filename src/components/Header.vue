@@ -162,10 +162,11 @@ input {
 }
 .item a {
   padding: 8px 10px;
+  color: black;
   transition: .15s linear all;
 }
 .item a:hover {
-  color: var(--color-pink);
+  color: gray;
 }
 .img-icon {
   height: 30px;
