@@ -53,4 +53,13 @@ main {
     transform: translateX(0);
   }
 }
+@keyframes modalChange {
+  from {
+    transform: translateX(-30%);
+  }
+  to {
+    transform: translateX(0);
+
+  }
+}
 

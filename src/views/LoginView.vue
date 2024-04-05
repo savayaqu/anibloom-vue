@@ -80,8 +80,13 @@ const onInputChange = (field, event) => {
             @change="(event) => onInputChange('password', event)"
         />
         <Button @submit.prevent="onSubmit" type="submit">Войти</Button>
-        <p v-if="errors.message">{{errors.message}}</p>
+        <p v-if="errors.message" class="error">{{errors.message}}</p>
       </template>
     </Form>
   </main>
 </template>
+<style scoped>
+.error {
+  color: var(--error-text);
+}
+</style>

@@ -4,8 +4,12 @@ import {getCategories} from "@/api/methods/product_categories/getCategories.js";
 import {getCategoryProducts} from "@/api/methods/product_categories/getCategoryProducts.js";
 import {API_URL, URL_PHOTO} from "@/config/index.js";
 import Button from "@/components/Button.vue";
+import Modal from "@/components/Modal.vue"
 import router from "@/router/index.js";
-
+const dataModal = reactive({
+  error: '',
+  success: ''
+})
 const isLoading = ref()
 const token = localStorage.getItem('api_token')
 const handleGetProducts = async (categoryId) =>
@@ -34,20 +38,18 @@ const loadCategories = async () => {
   }
 };
 const handleAddToCard = async (productId) => {
-  if (token != null) {
-    const response = await addToCart(productId)
-    alert(response.message)
-
-  }
-  else {
-    alert("Авторизируйся, сучара!!!")
-
-  }
-  console.log(token)
   if (!token) {
-
+    dataModal.error = 'Добавление товара в корзину доступно только авторизированным пользователям'
+    setTimeout(() => {
+      dataModal.error = '';
+    }, 3000);
   }
   else {
+    const response = await addToCart(productId)
+    dataModal.success = response.message
+    setTimeout(() => {
+      dataModal.success = '';
+    }, 3000);
   }
 }
 const loadCategoryProducts = async (categoryId, categoryName) => {
@@ -74,6 +76,7 @@ onMounted(async () => {
 </script>
 <template>
   <Loading v-if="isLoading"></Loading>
+  <Modal v-if="dataModal.error !== '' || dataModal.success !== ''" :error="dataModal.error" :success="dataModal.success"></Modal>
   <section class="p-2">
     <div style="display: flex; flex-direction: row; justify-content: center">
       <a v-for="category in categories" :key="category.id" class="category2" @click="handleGetProducts(category.id)" style="font-size: 32px; text-transform: uppercase; text-decoration: none; margin-right: 10px; font-weight: 600; padding: 10px; cursor: pointer">{{ category.name }}</a>
