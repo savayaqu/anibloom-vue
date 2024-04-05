@@ -7,9 +7,9 @@ import { logOut } from "@/api/methods/logOut.js";
 import { getProfile } from "@/api/methods/profile/getProfile.js";
 import {onMounted, ref, watch} from "vue";
 import { getProducts } from "@/api/methods/product_categories/getProducts.js";
-import {getProduct} from "@/api/methods/product_categories/getProduct.js";
 
 const profile = ref([]);
+const role = ref(null)
 const originalProducts = ref([]); // Сохраняем оригинальный список продуктов
 let products = [];
 const state = useAuthStore();
@@ -22,14 +22,13 @@ onMounted(async () => {
   const aaa = await getProducts();
   originalProducts.value = aaa.data; // Сохраняем оригинальный список продуктов
   products.value = aaa.data;
-  const response = await getProfile();
-  profile.value = response.data;
-  const role = response.data.role_id;
-  if (role === 2){
-    isAdmin.value = true;
-  }
 });
 
+const fetchProfile = async () => {
+  const response = await getProfile();
+  profile.value = response.data;
+  role.value = response.data.role_id;
+}
 const handleInputChange = () => {
   searchChange(); // Вызываем функцию фильтрации при каждом изменении ввода
 };
@@ -71,7 +70,7 @@ const handleProductClick = async (productId) => {
   await clearSearch();
 };
 
-
+onMounted(async () => await fetchProfile())
 </script>
 <template>
   <header class="header">
@@ -99,7 +98,7 @@ const handleProductClick = async (productId) => {
         <li class="item">
           <router-link to="/cart"><img class="img-icon" src="/images/cart.png" alt="Корзина"></router-link>
         </li>
-        <li class="item" v-if="isAdmin">
+        <li class="item" v-if="role === 2">
           <router-link to="/admin"><img class="img-icon" src="/images/admin.png" alt="Админ-панель"></router-link>
         </li>
         <li class="item">
