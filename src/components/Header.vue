@@ -38,14 +38,12 @@ const searchChange = () => {
     filteredProducts.value = [];
     return;
   }
-
   filteredProducts.value = originalProducts.value.filter(product => {
     const name = product.name ? product.name : '';
-    const description = product.description ? product.description : '';
     const searchQueryValue = searchQuery.value.toLowerCase(); // Приводим поисковой запрос к нижнему регистру
 
     // Проверяем, содержится ли поисковой запрос в названии или описании товара
-    return name.toLowerCase().includes(searchQueryValue) || description.toLowerCase().includes(searchQueryValue);
+    return name.toLowerCase().includes(searchQueryValue);
   });
 };
 
