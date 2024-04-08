@@ -5,11 +5,13 @@ import Form from "@/components/Form.vue";
 import FormItem from "@/components/FormItem.vue";
 import { addReview } from "@/api/methods/product_categories/reviews/addReview.js";
 import { getReviews } from "@/api/methods/product_categories/reviews/getReviews.js";
+import Modal from "@/components/Modal.vue";
 
 const props = defineProps(['productId']);
 const productId = ref(props.productId);
 const reviews = ref([]);
 const isLoading = ref()
+const token = localStorage.getItem('api_token')
 const data = reactive({
   newRating: '',
   newText: '',
@@ -17,16 +19,35 @@ const data = reactive({
   successMessage: '',
   errorMessage: '',
 });
+const dataModal = reactive({
+  error: '',
+  success: ''
+})
 
 const handleAddReview = async () => {
+
   isLoading.value = true
   data.errorMessages = {};
   data.errorMessage = '';
+
   const response = await addReview(productId.value, data.newRating, data.newText);
+  dataModal.error = response.message
+      setTimeout(() => {
+        dataModal.error = '';
+      }, 3000);
+  console.log(response.message)
   if (response.success) {
     data.successMessage = 'Отзыв успешно добавлен';
+    dataModal.success = response.message
+    setTimeout(() => {
+      dataModal.success = '';
+    }, 3000);
     await loadReviews(); // Обновляем отзывы после успешного добавления
   } else {
+    dataModal.error = response.message
+    setTimeout(() => {
+      dataModal.error = '';
+    }, 3000);
     if (response.code === 422 || response.code === 401) {
       data.errorMessages = response.errors || {};
     } else if (response.code === 404 || response.code === 403) {
@@ -82,6 +103,7 @@ onMounted(async () => await loadReviews())
       </div>
     </div>
   </section>
+  <Modal v-if="dataModal.error !== '' || dataModal.success !== ''" :error="dataModal.error" :success="dataModal.success"></Modal>
 </template>
 
 <style scoped>
