@@ -97,8 +97,8 @@ onMounted(async () => {
               </div>
               <div style="margin-top: 45px;">
                 <strong style="margin-top: 86px; color: #333333; font-size: 28px; font-weight: 800">{{ product.price }} руб</strong>
-                <Button v-if="product.quantity > 0" class="button" style="margin: 0 auto; background: #AE445A; border-radius: 10px; width: 235px; height: 40px; color: white; font-size: 16px;" @click="handleAddToCard(product.id)">В корзину</Button>
-                <Button v-else style="margin: 0 auto; background: #f39f5a; border: white 2px solid; border-radius: 10px; width: 235px; height: 40px; color: white; font-size: 16px;" disabled>Нет в наличии</Button>
+                <Button v-if="product.quantity > 0" class="button" style="margin: 0 auto; background: #AE445A; border-radius: 10px; text-align: center; width: 235px; height: 40px; color: white; font-size: 16px;" @click="handleAddToCard(product.id)">В корзину</Button>
+                <Button v-else style="margin: 0 auto; background: #f39f5a; border: white 2px solid; border-radius: 10px; width: 235px; text-align: center; height: 40px; color: white; font-size: 16px;" disabled>Нет в наличии</Button>
               </div>
             </div>
           </div>

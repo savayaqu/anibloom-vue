@@ -59,17 +59,19 @@ defineProps({
   border-radius: 5px;
   padding: 10px 15px;
   outline: none;
-  border: 1px solid var(--secondary-bg);
-  background-color: var(--secondary-bg);
-  color: white;
+  border: 3px solid #f39f5a;
+  background-color: white;
+  color: black;
+  width: 250px;
+  transition: .15s linear all;
 }
 .input:hover {
- border:1px solid var(--color-pink) ;
-  color:var(--color-pink) ;
+ border:3px solid #662549 ;
+  color:#662549 ;
 
 }
 .input:active {
-  border:1px solid var(--secondary-color) ;
+  border:3px solid var(--secondary-color) ;
   color:var(--secondary-color) ;
 }
 .errorMessage,

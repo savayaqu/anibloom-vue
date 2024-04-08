@@ -22,12 +22,14 @@ defineProps({
 
 <style scoped>
 .form {
-  padding: 20px 50px;
+  margin: 0 auto;
+  padding-top: 25px;
   border-radius: 10px;
-  background-color: var(--secondary-bg);
-align-items: center;
+  align-items: center;
+  justify-content: flex-end;
   display: flex;
   gap: 12px;
+  width: 500px;
   flex-direction: column;
 }
 </style>
