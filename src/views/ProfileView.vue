@@ -5,6 +5,7 @@ import {onMounted, ref} from "vue";
 import {getProfile} from "@/api/methods/profile/getProfile.js";
 import {getProduct} from "@/api/methods/product_categories/getProduct.js";
 import Loading from "@/components/Loading.vue";
+import Button from "@/components/Button.vue";
 const isLoading = ref()
 const profile = ref([])
 onMounted(async () => {
@@ -33,6 +34,7 @@ onMounted(async () => {
     <p>Эл. почта: {{profile.email}}</p>
     <p>Телефон: {{profile.telephone}}</p>
     <p>Дата рождения: {{profile.birth}}</p>
+    <router-link to="/profile/edit">Изменить</router-link>
   </div>
 </div>
 <OrderView></OrderView>

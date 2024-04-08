@@ -10,6 +10,7 @@ import ProductsView from "@/views/ProductsView.vue";
 import AdminView from "@/views/AdminView.vue";
 import EditProductView from "@/views/EditProductView.vue";
 import CreateProductView from "@/views/CreateProductView.vue";
+import ProfileEditView from "@/views/ProfileEditView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -43,6 +44,11 @@ const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: Profile
+    },
+    {
+      path: '/profile/edit',
+      name: 'profileEdit',
+      component: ProfileEditView
     },
     {
       path: '/cart',
