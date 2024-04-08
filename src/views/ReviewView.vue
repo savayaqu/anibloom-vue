@@ -45,9 +45,35 @@ onMounted(async () => await loadReviews())
 </script>
 
 <template>
-  <b>Отзывы о товаре:</b>
+  <Form method="POST" :submit="handleAddReview">
+    <FormItem
+        @change="changeRating"
+        label="Рейтинг"
+        placeholder="Введите рейтинг"
+        type="number"
+        id="rating"
+        min="1"
+        max="5"
+        :value="data.newRating"
+        :error-message="data.errorMessages.rating"
+    >
+    </FormItem>
+    <FormItem
+        @change="changeText"
+        label="Ваш отзыв"
+        placeholder="Введите отзыв тут"
+        id="textReview"
+        :value="data.newText"
+        :error-message="data.errorMessages.textReview"
+    >
+    </FormItem>
+    <Button type="submit" :disabled="data.isLoading">Добавить отзыв</Button>
+    <p v-if="data.errorMessage" class="error">{{ data.errorMessage }}</p> <!-- Отображение сообщения об ошибке -->
+    <p v-if="data.successMessage">{{ data.successMessage }}</p>
+  </Form>
+  <h3 class="review">Отзывы о товаре:</h3>
   <section>
-    <div v-if="reviews.length === 0">Отзывов пока нет</div>
+    <div class="no" v-if="reviews.length === 0">Отзывов пока нет :(</div>
     <div v-else>
       <div v-for="review in reviews" :key="review.id">
         <p>Отзыв написан: {{ review.user.login }}</p>
@@ -55,38 +81,21 @@ onMounted(async () => await loadReviews())
         <p>Описание: {{ review.textReview }}</p>
       </div>
     </div>
-
-    <Form method="POST" :submit="handleAddReview">
-      <FormItem
-          @change="changeRating"
-          label="Рейтинг"
-          placeholder="Введите рейтинг"
-          type="number"
-          id="rating"
-          min="1"
-          max="5"
-          :value="data.newRating"
-          :error-message="data.errorMessages.rating"
-      >
-      </FormItem>
-      <FormItem
-          @change="changeText"
-          label="Описание"
-          placeholder="Введите описание"
-          id="textReview"
-          :value="data.newText"
-          :error-message="data.errorMessages.textReview"
-      >
-      </FormItem>
-      <Button type="submit" :disabled="data.isLoading">Добавить отзыв</Button>
-      <p v-if="data.errorMessage" class="error">{{ data.errorMessage }}</p> <!-- Отображение сообщения об ошибке -->
-      <p v-if="data.successMessage">{{ data.successMessage }}</p>
-    </Form>
   </section>
 </template>
 
 <style scoped>
 .error {
   color: red;
+}
+.review {
+  text-align: center;
+  margin-top: 15px;
+}
+.no {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 15px;
 }
 </style>

@@ -20,19 +20,14 @@ defineProps({
   padding: 10px 15px;
   border-radius: 5px;
 
-  border: 2px solid var(--secondary-color);
-  background-color: var(--secondary-bg);
+  border: 3px solid #662549;
+  background-color: #AE445A;
   color: white;
   font-weight: bold;
 
   transition: .15s linear all;
 }
 .button:hover {
-  border: 2px solid var(--color-pink);
-  background-color: transparent;
-}
-.button:active {
-  border: 2px solid var(--color-pink);
-  background-color: var(--color-pink);
+  border: 3px solid #f39f5a;
 }
 </style>

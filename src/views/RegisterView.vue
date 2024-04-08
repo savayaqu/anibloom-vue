@@ -56,14 +56,16 @@ const onInputChange = (field, event) => {
 </script>
 <template>
   <main>
-    <h1>Регистрация</h1>
+    <h1 class="reg">Регистрация</h1>
 
     <Form :submit="onSubmit" method="POST">
 
       <p v-if="isLoading">Загрузка...</p>
 
       <template v-else>
-        <FormItem
+        <h2 class="reg">Введите информацию о вас, чтобы мы знали как к вам обращаться</h2>
+        <div class="default">
+          <FormItem
             id="name"
             label="Введите имя"
             placeholder="Введите имя"
@@ -72,69 +74,78 @@ const onInputChange = (field, event) => {
             :error-message="errors.data?.name"
             @change="(event) => onInputChange('name', event)"
         />
-        <FormItem
-            id="surname"
-            label="Введите фамилию"
-            placeholder="Введите фамилию"
-            type="text"
-            :value="inputData.surname"
-            :error-message="errors.data?.surname"
-            @change="(event) => onInputChange('surname', event)"
-        />
-        <FormItem
-            id="patronymic"
-            label="Введите отчество"
-            placeholder="Введите отчество"
-            type="text"
-            :value="inputData.patronymic"
-            :error-message="errors.data?.patronymic"
-            @change="(event) => onInputChange('patronymic', event)"
-        />
-        <FormItem
-            id="login"
-            label="Введите логин"
-            placeholder="Введите логин"
-            type="text"
-            :value="inputData.login"
-            :error-message="errors.data?.login"
-            @change="(event) => onInputChange('login', event)"
-        />
-        <FormItem
-            id="password"
-            label="Введите пароль"
-            placeholder="Введите пароль"
-            type="password"
-            :value="inputData.password"
-            :error-message="errors.data?.password"
-            @change="(event) => onInputChange('password', event)"
-        />
-        <FormItem
-            id="birth"
-            label="Введите дату рождения"
-            placeholder="Введите дату рождения"
-            type="date"
-            :value="inputData.birth"
-            :error-message="errors.data?.birth"
-            @change="(event) => onInputChange('birth', event)"
-        />
-        <FormItem
-            id="email"
-            label="Введите почту"
-            placeholder="Введите почту"
-            type="email"
-            :value="inputData.email"
-            :error-message="errors.data?.email"
-            @change="(event) => onInputChange('email', event)"
-        />
-        <FormItem
-            id="telephone"
-            label="Введите номер телефона"
-            placeholder="Введите номер телефона"
-            type="text"
-            :value="inputData.telephone"
-            :error-message="errors.data?.telephone"
-            @change="(event) => onInputChange('telephone', event)"
-        />
+          <FormItem
+              id="surname"
+              label="Введите фамилию"
+              placeholder="Введите фамилию"
+              type="text"
+              :value="inputData.surname"
+              :error-message="errors.data?.surname"
+              @change="(event) => onInputChange('surname', event)"
+          />
+          <FormItem
+              id="patronymic"
+              label="Введите отчество"
+              placeholder="Введите отчество"
+              type="text"
+              :value="inputData.patronymic"
+              :error-message="errors.data?.patronymic"
+              @change="(event) => onInputChange('patronymic', event)"
+          /></div>
+        <h2 class="reg">Теперь, пожалуйста, дополнительную информацию</h2>
+        <h2 class="reg">P.S: она нам тоже важна)</h2>
+        <div class="default">
+          <FormItem
+              id="birth"
+              label="Введите дату рождения"
+              placeholder="Введите дату рождения"
+              type="date"
+              :value="inputData.birth"
+              :error-message="errors.data?.birth"
+              @change="(event) => onInputChange('birth', event)"
+          />
+          <FormItem
+              id="email"
+              label="Введите почту"
+              placeholder="Введите почту"
+              type="email"
+              :value="inputData.email"
+              :error-message="errors.data?.email"
+              @change="(event) => onInputChange('email', event)"
+          />
+          <FormItem
+              id="telephone"
+              label="Введите номер телефона"
+              placeholder="Введите номер телефона"
+              type="text"
+              :value="inputData.telephone"
+              :error-message="errors.data?.telephone"
+              @change="(event) => onInputChange('telephone', event)"
+          />
+        </div>
+        <h2 class="reg">А теперь придумайте логин и пароль для входа в аккаунт</h2>
+        <div>
+          <FormItem
+              id="login"
+              label="Введите логин"
+              placeholder="Введите логин"
+              type="text"
+              :value="inputData.login"
+              :error-message="errors.data?.login"
+              @change="(event) => onInputChange('login', event)"
+          />
+          <FormItem
+              id="password"
+              label="Введите пароль"
+              placeholder="Введите пароль"
+              type="password"
+              :value="inputData.password"
+              :error-message="errors.data?.password"
+              @change="(event) => onInputChange('password', event)"
+          />
+        </div>
+
+
 
         <Button @submit.prevent="onSubmit" type="submit">Зарегистрироваться</Button>
       </template>
@@ -142,3 +153,12 @@ const onInputChange = (field, event) => {
     </Form>
   </main>
 </template>
+<style scoped>
+.reg {
+  text-align: center;
+}
+.default {
+  display: flex;
+  gap: 20px;
+}
+</style>

@@ -161,8 +161,9 @@ onMounted(async () => await load())
   <Loading v-if="isLoading"></Loading>
   <section v-if="isAdmin === true">
     <div>
-      <h2>Категории</h2>
-        <h3>Создание новой категории</h3>
+      <h2 class="text">Категории</h2>
+        <h3 class="text2">Создание новой категории</h3>
+      <div class="margin">
         <FormItem
             @change="handleAddNameCategory"
             label="Название категории"
@@ -171,7 +172,9 @@ onMounted(async () => await load())
             :error-message="data.errorMessages?.name"
             :value="data.addNameCategory"
         ></FormItem>
-        <Button type="submit" @click="handleAddCategory">Создать</Button>
+        <Button type="submit" @click="handleAddCategory">Создать категорию</Button>
+      </div>
+      <h3 class="text2">Изменение существующих категорий</h3>
       <table class="table">
         <thead>
         <tr>
@@ -192,29 +195,31 @@ onMounted(async () => await load())
             ></FormItem>
           </td>
           <td>
-            <Button class="btn btn-primary m-3 w-50" @click="handleEditCategory(category.id)">Редактировать</Button>
-            <Button class="btn btn-danger m-3 w-50" @click="handleDeleteCategory(category.id)">Удалить</Button>
+            <div style="display:flex; gap: 15px; margin-top: 30px;">
+              <Button class="btn btn-primary m-3 w-50" @click="handleEditCategory(category.id)">Сохранить</Button>
+              <Button class="btn btn-danger m-3 w-50" @click="handleDeleteCategory(category.id)">Удалить</Button>
+            </div>
           </td>
         </tr>
         </tbody>
       </table>
     </div>
-      <h2>Товары</h2>
-      <Button @click="handleAddProduct">Создать товар</Button>
-    <table>
+      <h2 class="text2">Товары</h2>
+      <Button class="button2" @click="handleAddProduct">Создать товар</Button>
+    <table class="table2">
       <tr>
         <th>Название</th>
         <th>Фото</th>
         <th>Цена</th>
-        <th>В наличие</th>
+        <th>В наличии</th>
         <th>Действия</th>
       </tr>
       <tr v-for="item in products">
         <td>{{item.name}}</td>
-        <td><img :src="URL_PHOTO + '/storage/' + item.photo"></td>
-        <td>{{item.price}}</td>
-        <td>{{item.quantity}}</td>
-        <td>
+        <td><img :src="URL_PHOTO + '/storage/' + item.photo" alt="Упс..."></td>
+        <td>{{item.price}} руб</td>
+        <td>{{item.quantity}} шт</td>
+        <td class="button">
           <Button @click="handleGetProduct(item.id)">Редактировать</Button>
           <Button @click="handleDeleteProduct(item.id)">Удалить</Button>
         </td>
@@ -228,6 +233,35 @@ onMounted(async () => await load())
 </template>
 
 <style scoped>
+.table2 {
+  margin-right: 100px;
+  margin-top: 15px;
+}
+.button2 {
+  margin: 0 auto;
+}
+.table {
+  margin: 0 auto;
+  padding-top: 10px;
+}
+.button {
+  margin-top: 15px;
+  display: flex;
+  gap: 15px;
+}
+.margin {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+.text2 {
+  text-align: center;
+  margin-top: 30px;
+}
+.text {
+  text-align: center;
+}
 img {
   height: 100px;
   width: 100px;

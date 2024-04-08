@@ -8,14 +8,14 @@
       <div style="display: flex; flex-direction: column; justify-content: space-between">
         <div style="display: flex; justify-content: flex-start">
           <div style="display: flex; flex-direction: column">
-            <a class="line-height" style="text-decoration: none;" href="#">Контакты</a>
-            <a class="line-height" style="text-decoration: none;" href="#">Доставка и оплата</a>
-            <a class="line-height" style="text-decoration: none;" href="#">Профиль</a>
+            <a class="line-height pointer" style="text-decoration: none;" href="#">Контакты</a>
+            <a class="line-height pointer" style="text-decoration: none;" href="#">Доставка и оплата</a>
+            <a class="line-height pointer" style="text-decoration: none;" href="#">Профиль</a>
           </div>
           <div style="display: flex; flex-direction: column">
-            <a class="line-height" style="text-decoration: none;" href="#">Политика конфиденциальности и оферта</a>
-            <a class="line-height" style="text-decoration: none;" href="#">Пользовательское соглашение</a>
-            <a class="line-height" style="text-decoration: none;" href="#">Обратная связь</a>
+            <a class="line-height pointer" style="text-decoration: none;" href="#">Политика конфиденциальности и оферта</a>
+            <a class="line-height pointer" style="text-decoration: none;" href="#">Пользовательское соглашение</a>
+            <a class="line-height pointer" style="text-decoration: none;" href="#">Обратная связь</a>
           </div>
         </div>
         <div>
@@ -26,8 +26,8 @@
         <div>
           <p style="font-weight: 700">Мы в соц. сетях:</p>
           <div style="display: flex; gap: 10px; margin-top: 10px;">
-            <a href="#"><img src="/public/images/TT.png" alt="ТикТок"></a>
-            <a href="#"><img src="/public/images/VK.png" alt="ВК"></a>
+            <a class="pointer" href="#"><img src="/public/images/TT.png" alt="ТикТок"></a>
+            <a class="pointer" href="#"><img src="/public/images/VK.png" alt="ВК"></a>
           </div>
         </div>
         <div style="margin-top: 40px;">
@@ -52,6 +52,9 @@
   transition: .15s linear all;;
 }
 .line-height:hover {
-  color: gray;
+  color: grey;
+}
+.pointer {
+  cursor: pointer;
 }
 </style>

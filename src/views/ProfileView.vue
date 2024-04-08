@@ -24,9 +24,9 @@ onMounted(async () => {
 
 <template>
   <Loading v-if="isLoading"></Loading>
-<div>
+<div class="center">
   <h2>Пользовательские данные</h2>
-  <div>
+  <div class="data">
     <p>Фамилия: {{profile.surname}}</p>
     <p>Имя: {{profile.name}}</p>
     <p>Отчество: {{profile.patronymic}}</p>
@@ -39,5 +39,13 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-
+.center {
+  text-align: center;
+}
+.data {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
 </style>

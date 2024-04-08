@@ -55,7 +55,7 @@ const onInputChange = (field, event) => {
 
 <template>
   <main>
-    <h1>Авторизация</h1>
+    <h1 class="auth">Авторизация</h1>
 
     <Form :submit="onSubmit" method="POST">
       <Loading v-if="isLoading"></Loading>
@@ -88,5 +88,8 @@ const onInputChange = (field, event) => {
 <style scoped>
 .error {
   color: var(--error-text);
+}
+.auth {
+  text-align: center;
 }
 </style>

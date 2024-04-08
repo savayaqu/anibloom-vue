@@ -50,13 +50,71 @@ onMounted(async () => {
 <Loading v-if="isLoading"></Loading>
   <Modal v-if="dataModal.error !== '' || dataModal.success !== ''" :error="dataModal.error" :success="dataModal.success"></Modal>
   <section>
-    <h3>{{ product.name }}</h3>
-    <img :src=" URL_PHOTO + '/storage/' + product.photo" :alt="product.name" style="width: 250px; height: 272px;">
-    <p>Описание товара: {{ product.description }}</p>
-    <Button v-if="product.quantity > 0" @click="handleAddToCard(product.id)">В корзину</Button>
-    <button v-else disabled>Нет в наличии</button>
+    <div class="margin">
+        <h3 class="product">{{ product.name }}</h3>
+      <div style="display:flex; margin-top: 20px;">
+        <div class="alt">
+          <img v-if="product.photo" :src="URL_PHOTO + '/storage/' + product.photo" style="width: 250px; height: 272px; border-radius: 5px;" alt="Product Image">
+          <img v-else src="/public/images/logo.png" style="width: 250px; height: 272px; border-radius: 5px;" alt="Default Image">
+        </div>
+        <div>
+          <p class="desc">{{ product.description }}</p>
+          <p class="price">Цена: {{ product.price }} руб.</p>
+          <!-- Добавляем проверку на количество товара -->
+          <Button class="button" v-if="product.quantity > 0" style=" background: #AE445A; border-radius: 10px; width: 235px; height: 40px; color: white; font-size: 16px;" @click="handleAddToCard(product.id)">В корзину</Button>
+          <Button class="no" v-else style="background: #f39f5a; border: white 2px solid; border-radius: 10px; width: 235px; height: 40px; color: white; font-size: 16px;" disabled>Нет в наличии</Button>
+        </div>
+      </div>
+    </div>
+    <h2 class="text">Тут вы можете оставить свой отзыв</h2>
     <Review :productId="productId"></Review>
   </section>
 </template>
+<style scoped>
+.text {
+  margin-top: 40px;
+  text-align: center;
+}
+.margin {
+  display: flex;
+  margin-top: 15px;
+  flex-direction: column;
+}
+.product {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+}
+.desc {
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 850px;
+}
+.alt {
+  width: 260px;
+  height: 282px;
+  border: 5px solid #AE445A;
+  margin-top: 10px;
+}
+.price {
+  margin-left: 10px;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 20px;
+}
+.button {
+  margin-left: 10px;
+  margin-top: 10px;
+  border: #662549 2px solid;
+  box-shadow: #662549 0 5px 5px;
+}
+.button:hover {
+  border: #f39f5a 2px solid;
+  box-shadow: #f39f5a 0 5px 5px;
+}
+.no {
+  box-shadow: #f39f5a 0 5px 5px;
+}
+</style>
 
 
