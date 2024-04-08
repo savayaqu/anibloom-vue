@@ -69,26 +69,50 @@ const handleUpdateCart = async (productId, quantity) => {
     <h2>Ваша корзина пуста</h2>
   </div>
   <div v-else>
-    <div v-for="item in cartItems.items" :key="item.id">
-      <img :src=" URL_PHOTO + '/storage/' + item.product.photo" :alt="item.product.name">
-      <p>{{item.price}}</p>
-      <select v-model="item.quantity" @change="handleUpdateCart(item.product.id, item.quantity)">
-        <option v-for="quantity in availableQuantities(item)" :key="quantity" :value="quantity">{{quantity}}</option>
-      </select>
-      <div>
-        <Button @click="handleDeleteCartItem(item.product.id)">
-          <img src="/images/trash.png" alt="Мусорка">
+    <div class="margin" v-for="item in cartItems.items" :key="item.id">
+      <img style="width: 250px; height: 272px; border: 5px solid #AE445A;" :src=" URL_PHOTO + '/storage/' + item.product.photo" :alt="item.product.name">
+      <div class="info">
+        <h3 class="product">{{ item.product.name }}</h3>
+        <p style="margin-top: 5px;">Цена за шт. {{item.product.price}} руб</p>
+        <div class="d-f top">
+          <p>Выберите кол-во: </p>
+          <select v-model="item.quantity" @change="handleUpdateCart(item.product.id, item.quantity)">
+            <option v-for="quantity in availableQuantities(item)" :key="quantity" :value="quantity">{{quantity}}</option>
+          </select>
+        </div>
+        <Button style="margin-top: 10px;" @click="handleDeleteCartItem(item.product.id)">
+          <div class="d-f">
+            <p style="margin-top: 7px;">Удалить</p>
+            <img style="margin-left: 5px;" class="img-icon" src="/images/trash.png" alt="Мусорка">
+          </div>
         </Button>
+        <div style="margin-top: 5px;"><b>Общая стоимость: {{totalPrice}}</b></div>
       </div>
-      <div><b>Общая стоимость: {{totalPrice}}</b></div>
-
     </div>
     <CreateOrderView :handleGetCart="handleGetCart"></CreateOrderView>
-
   </div>
 
 </template>
 
 <style scoped>
-
+.img-icon {
+  height: 30px;
+  width: 30px;
+}
+.top {
+  margin-top: 50px;
+}
+.margin {
+  margin-top: 20px;
+  display: flex;
+}
+.info {
+  margin-left: 10px;
+}
+.d-f {
+  display: flex;
+}
+select {
+  margin-left: 10px;
+}
 </style>

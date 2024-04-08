@@ -18,8 +18,7 @@ defineProps({
   multiple: Boolean,
   min: Number,
   max: Number,
-
-
+  step: Number,
 })
 </script>
 
@@ -33,6 +32,7 @@ defineProps({
       :multiple = "multiple"
       :class="['input', {error: errorMessage?.length}]"
   :type="type"
+      :step="step"
   :value="value"
   @input = "onChange"
   :placeholder="placeholder"

@@ -34,8 +34,8 @@ onMounted(async () => {
     <p>Эл. почта: {{profile.email}}</p>
     <p>Телефон: {{profile.telephone}}</p>
     <p>Дата рождения: {{profile.birth}}</p>
-    <router-link to="/profile/edit">Изменить</router-link>
   </div>
+  <Button class="button"><router-link to="/profile/edit">Изменить</router-link></Button>
 </div>
 <OrderView></OrderView>
 </template>
@@ -49,5 +49,8 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+.button {
+  margin-top: 15px;
 }
 </style>

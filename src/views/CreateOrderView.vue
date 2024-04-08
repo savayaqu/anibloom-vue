@@ -58,28 +58,38 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>
-    <h3>Адрес доставки</h3>
-    <FormItem
-        @change="handleAddress"
-        id="address"
-        name="address"
-        type="text"
-        :error-message="errors.data?.address"
-    ></FormItem>
-  </div>
-  <div>
-    <h3>Способ оплаты</h3>
-    <Form method="POST" :submit="handleCheckout">
-      <div v-for="payment in payments">
-        <input type="radio" :id="payment.name" name="payment" @change="handlePaymentId" :value="payment.id">
-        <label :for="payment.name">{{payment.name}}</label>
-      </div>
-    </Form>
-  </div>
-  <Button :ref="handleGetCart" @click="handleCheckout">Оформить заказ</Button>
+  <Form style="margin-top: 20px;">
+    <div>
+      <FormItem
+          @change="handleAddress"
+          id="address"
+          name="address"
+          type="text"
+          label="Введите адрес доставки"
+          :error-message="errors.data?.address"
+      ></FormItem>
+    </div>
+    <div>
+      <h3 class="text">Выберите способ оплаты: </h3>
+      <Form class="left" method="POST" :submit="handleCheckout">
+        <div v-for="payment in payments">
+          <input type="radio" :id="payment.name" name="payment" @change="handlePaymentId" :value="payment.id">
+          <label :for="payment.name">{{payment.name}}</label>
+        </div>
+      </Form>
+    </div>
+    <Button :ref="handleGetCart" @click="handleCheckout">Оформить заказ</Button>
+  </Form>
+
 </template>
 
 <style scoped>
-
+.text {
+  text-align: center;
+}
+.left {
+  align-items: flex-start;
+  margin-left: 225px;
+  margin-top: -15px;
+}
 </style>

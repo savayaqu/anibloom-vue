@@ -6,6 +6,7 @@ import {register} from "@/api/methods/auth/register.js";
 import Button from "@/components/Button.vue";
 import router from "@/router/index.js";
 import {getProfile} from "@/api/methods/profile/getProfile.js";
+
 const inputData = reactive({
   name: '',
   surname: '',
@@ -19,8 +20,6 @@ const inputData = reactive({
 onMounted(async () => {
   const response = await getProfile()
   inputData.value = response.data
-  console.log(inputData.value)
-  console.log(inputData.value.name)
 })
 
 
@@ -150,7 +149,7 @@ const onInputChange = (field, event) => {
 
 
 
-        <Button @submit.prevent="onSubmit" type="submit">Зарегистрироваться</Button>
+        <Button @submit.prevent="onSubmit" type="submit">Сохранить изменения</Button>
       </template>
 
     </Form>
