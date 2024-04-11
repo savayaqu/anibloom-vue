@@ -35,7 +35,7 @@ onMounted(async () => {
     <p>Телефон: {{profile.telephone}}</p>
     <p>Дата рождения: {{profile.birth}}</p>
   </div>
-  <Button class="button"><router-link to="/profile/edit">Изменить</router-link></Button>
+  <router-link to="/profile/edit"><Button class="button"><router-link to="/profile/edit">Изменить</router-link></Button></router-link>
 </div>
 <OrderView></OrderView>
 </template>

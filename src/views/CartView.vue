@@ -86,9 +86,9 @@ const handleUpdateCart = async (productId, quantity) => {
             <img style="margin-left: 5px;" class="img-icon" src="/images/trash.png" alt="Мусорка">
           </div>
         </Button>
-        <div style="margin-top: 5px;"><b>Общая стоимость: {{totalPrice}}</b></div>
       </div>
     </div>
+    <div style="margin-top: 10px; font-size: 20px;"><b>Общая стоимость: {{totalPrice}}</b></div>
     <CreateOrderView :handleGetCart="handleGetCart"></CreateOrderView>
   </div>
 
