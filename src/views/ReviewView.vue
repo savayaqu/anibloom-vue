@@ -25,35 +25,28 @@ const dataModal = reactive({
 })
 
 const handleAddReview = async () => {
-
   isLoading.value = true
-  data.errorMessages = {};
-  data.errorMessage = '';
 
   const response = await addReview(productId.value, data.newRating, data.newText);
-  dataModal.error = response.message
-      setTimeout(() => {
-        dataModal.error = '';
-      }, 3000);
-  console.log(response.message)
-  if (response.success) {
-    data.successMessage = 'Отзыв успешно добавлен';
+  console.log(response)
+  if (response.message === "Отзыв успешно сохранен") {
     dataModal.success = response.message
     setTimeout(() => {
       dataModal.success = '';
     }, 3000);
-    await loadReviews(); // Обновляем отзывы после успешного добавления
   } else {
     dataModal.error = response.message
     setTimeout(() => {
       dataModal.error = '';
     }, 3000);
+
     if (response.code === 422 || response.code === 401) {
       data.errorMessages = response.errors || {};
     } else if (response.code === 404 || response.code === 403) {
       data.errorMessage = response.message;
     }
   }
+  await loadReviews(); // Обновляем отзывы после успешного добавления
 };
 
 const loadReviews = async () => {
@@ -66,6 +59,7 @@ onMounted(async () => await loadReviews())
 </script>
 
 <template>
+  <Modal v-if="dataModal.error !== '' || dataModal.success !== ''" :error="dataModal.error" :success="dataModal.success"></Modal>
   <Form method="POST" :submit="handleAddReview">
     <FormItem
         @change="changeRating"
@@ -73,8 +67,8 @@ onMounted(async () => await loadReviews())
         placeholder="Введите рейтинг"
         type="number"
         id="rating"
-        min="1"
-        max="5"
+        min=1
+        max=5
         :value="data.newRating"
         :error-message="data.errorMessages.rating"
     >
@@ -89,8 +83,6 @@ onMounted(async () => await loadReviews())
     >
     </FormItem>
     <Button type="submit" :disabled="data.isLoading">Добавить отзыв</Button>
-    <p v-if="data.errorMessage" class="error">{{ data.errorMessage }}</p> <!-- Отображение сообщения об ошибке -->
-    <p v-if="data.successMessage">{{ data.successMessage }}</p>
   </Form>
   <h3 class="review">Отзывы о товаре:</h3>
   <section>

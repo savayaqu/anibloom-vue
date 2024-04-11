@@ -36,8 +36,8 @@ defineProps({
   :value="value"
   @input = "onChange"
   :placeholder="placeholder"
-      :min="min"
-      :max="max"
+      :min=min
+      :max=max
   :id="id">
 
   <ul v-if="errorMessage.length">
