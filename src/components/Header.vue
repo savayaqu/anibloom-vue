@@ -105,10 +105,10 @@ onMounted(async () => await fetchProfile())
       </template>
       <template v-else>
         <li class="item">
-          <router-link to="login">Вход</router-link>
+          <router-link to="/login">Вход</router-link>
         </li>
         <li class="item">
-          <router-link to="register">Регистрация</router-link>
+          <router-link to="/register">Регистрация</router-link>
         </li>
       </template>
     </ul>

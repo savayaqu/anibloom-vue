@@ -1,10 +1,11 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import {loadOrder} from "@/api/methods/loadOrder.js";
 import Button from "@/components/Button.vue";
 import {URL_PHOTO} from "@/config/index.js";
 import router from "@/router/index.js";
 import Loading from "@/components/Loading.vue";
+import Modal from "@/components/Modal.vue";
 const isLoading = ref()
 const ocp = ref([])
 onMounted(async () => {
