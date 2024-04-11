@@ -63,6 +63,13 @@ const changeText = (e) => data.newText = e.target.value
 const changeRating = (e) => data.newRating = e.target.value
 
 onMounted(async () => await loadReviews())
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}.${month}.${year}`;
+};
 </script>
 
 <template>
@@ -96,10 +103,10 @@ onMounted(async () => await loadReviews())
   <section>
     <div class="no" v-if="reviews.length === 0">Отзывов пока нет :(</div>
     <div v-else>
-      <div v-for="review in reviews" :key="review.id">
-        <p>Отзыв написан: {{ review.user.login }}</p>
-        <p>Рейтинг: {{ review.rating }}</p>
-        <p>Описание: {{ review.textReview }}</p>
+      <div class="review_div" v-for="review in reviews" :key="review.id">
+        <p class="name margin"><b>{{ review.user.login }}</b> - {{ formatDate(review.updated_at) }}</p>
+        <p class="rating margin">Рейтинг: {{ review.rating }}</p>
+        <p class="review_p margin">{{ review.textReview }}</p>
       </div>
     </div>
   </section>
@@ -107,8 +114,28 @@ onMounted(async () => await loadReviews())
 </template>
 
 <style scoped>
+.name {
+  font-size: 20px;
+  margin-top: 5px;
+}
+.rating {
+  margin-top: 5px;
+  border-bottom: 2px solid black;
+}
+.review_p {
+  margin-top: 5px;
+  padding-bottom: 5px;
+}
+.margin {
+  margin-left: 5px;
+  margin-right: 5px;
+}
 .error {
   color: red;
+}
+.review_div {
+  border: 10px ridge #AE445A;
+  margin-top: 10px;
 }
 .review {
   text-align: center;
