@@ -26,7 +26,8 @@ const handleGetProduct = async (fileId) =>
 <template>
   <Loading v-if="isLoading"></Loading>
   <h2 class="center">Ваши заказы:</h2>
-  <div v-for="item in ocp" :key="item.order.id" class="order">
+  <div class="no" v-if="ocp.length === 0">У вас пока что не было заказов :(</div>
+  <div v-else v-for="item in ocp" :key="item.order.id" class="order">
     <h2 class="center">Заказ №{{item.order.id}}</h2>
     <h4>Заказ от {{item.order.dateOrder}}</h4>
     <div class="margin2">
@@ -57,7 +58,12 @@ const handleGetProduct = async (fileId) =>
 .table2 {
   margin: 0 auto;
 }
-
+.no {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 15px;
+}
 td {
   width: fit-content;
   text-align: center;

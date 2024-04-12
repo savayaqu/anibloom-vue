@@ -31,14 +31,14 @@ defineProps({
   <input
       :multiple = "multiple"
       :class="['input', {error: errorMessage?.length}]"
-  :type="type"
+      :type="type"
       :step="step"
-  :value="value"
-  @input = "onChange"
-  :placeholder="placeholder"
+      :value="value"
+      @input = "onChange"
+      :placeholder="placeholder"
       :min=min
       :max=max
-  :id="id">
+      :id="id">
 
   <ul v-if="errorMessage.length">
     <li class="errorMessage" v-for="message in errorMessage">

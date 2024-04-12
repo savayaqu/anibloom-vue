@@ -83,38 +83,11 @@
               :error-message="errors.data?.password"
               @change="(event) => onInputChange('password', event)"
           />
-          <FormItem
-              id="email"
-              label="Введите почту"
-              placeholder="Введите почту"
-              type="email"
-              :value="inputData.email"
-              :error-message="errors.data?.email"
-              @change="(event) => onInputChange('email', event)"
-          />
-          <FormItem
-              id="birth"
-              label="Введите дату рождения"
-              placeholder="Введите дату рождения"
-              type="date"
-              :value="inputData.birth"
-              :error-message="errors.data?.birth"
-              @change="(event) => onInputChange('birth', event)"
-          />
-          <FormItem
-              id="telephone"
-              label="Введите телефон"
-              placeholder="Введите телефон"
-              type="text"
-              :value="inputData.telephone"
-              :error-message="errors.data?.telephone"
-              @change="(event) => onInputChange('telephone', event)"
-          />
         </div>
 
 
 
-        <Button @submit.prevent="onSubmit" type="submit">Зарегистрироваться</Button>
+        <Button @submit.prevent="onSubmit" type="submit">Сохранить</Button>
       </template>
 
     </Form>
@@ -194,7 +167,6 @@ const onInputChange = (field, event) => {
 
 .default {
   display: flex;
-  flex-direction: column;
   gap: 20px;
 }
 </style>
