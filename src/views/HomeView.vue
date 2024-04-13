@@ -79,9 +79,9 @@ onMounted(async () => {
   <Modal v-if="dataModal.error !== '' || dataModal.success !== ''" :error="dataModal.error" :success="dataModal.success"></Modal>
   <section class="p-2">
     <div style="display: flex; flex-direction: row; justify-content: center">
-      <a v-for="category in categories" :key="category.id" class="category2" @click="handleGetProducts(category.id)" style="font-size: 32px; text-transform: uppercase; text-decoration: none; margin-right: 10px; font-weight: 600; padding: 10px; cursor: pointer">{{ category.name }}</a>
+      <a v-for="category in categories" :key="category.id" class="category2" @click="handleGetProducts(category.id)">{{ category.name }}</a>
     </div>
-    <h2 style="width: 540px; display: flex; justify-content: center; text-align: center; padding-top: 30px; margin: 0 auto; font-weight: 700">Интернет-магазин аниме товаров «Anibloom»</h2>
+    <h2 class="h">Интернет-магазин аниме товаров «Anibloom»</h2>
     <template v-for="category in categories" :key="category.id">
       <div v-if="category.products && category.products.length > 0" style="margin-top: 45px;">
         <div class="category">
@@ -97,8 +97,8 @@ onMounted(async () => {
               </div>
               <div style="margin-top: 45px;">
                 <strong style="margin-top: 86px; color: #333333; font-size: 28px; font-weight: 800">{{ product.price }} руб</strong>
-                <Button v-if="product.quantity > 0" class="button" style="margin: 0 auto; background: #AE445A; border-radius: 10px; text-align: center; width: 235px; height: 40px; color: white; font-size: 16px;" @click="handleAddToCard(product.id)">В корзину</Button>
-                <Button v-else style="margin: 0 auto; background: #f39f5a; border: white 2px solid; border-radius: 10px; width: 235px; text-align: center; height: 40px; color: white; font-size: 16px;" disabled>Нет в наличии</Button>
+                <Button v-if="product.quantity > 0" class="yes" @click="handleAddToCard(product.id)">В корзину</Button>
+                <Button class="no" v-else disabled>Нет в наличии</Button>
               </div>
             </div>
           </div>
@@ -109,12 +109,49 @@ onMounted(async () => {
     <div style="margin: 30px;">
       <h2 style="font-weight: 700; font-size: 32px; text-align: center;">ANIBLOOM - магазин аниме, манги, кружек, милых приятностей и значков со всего мира.</h2>
       <p class="end">Все это замечательно подходит в качестве необычного подарка для себя или для близких.</p>
-      <p class="end">Неважно, какой у вас повод - у нас есть подарки на Новый год, на день рождения, на 23 февраля и на 8 марта. Мы подберем интересные подарки девушке, парню, брату, сестре, маме, папе, сыну, дочке, племянникам. Особенно вольготно у нас будет любителям гик-культуры - в наличии тысячи штуковин по вашим любимым фильмам, сериалам, аниме, играм и мультикам. Подарочный набор по любимому фандому - будь то Геншин, Наруто, Токийский гуль, Бродячие псы, Евангелион, Берсерк, Токийские мстители, Ван пис, Клинок рассекающий демонов или Джо Джо - это лучший подарок анимешнику.</p>
-      <p class="end">Мы находимся в России, у нас есть филиалы в Новосибирске - на ул. Кирова 27, Красном проспекте 69 и пр. Карла Маркса 24а. В Красноярске - на ул. Республики, 43. И в Томске, на улице Елизаровых 43. Мы доставляем - по городу, по России и в другие страны.</p>
+      <p class="end">Неважно, какой у вас повод - у нас есть подарки на Новый год, на день рождения, на 23 февраля и на 8 марта.
+        Мы подберем интересные подарки девушке, парню, брату, сестре, маме, папе, сыну, дочке, племянникам.
+        Особенно вольготно у нас будет любителям гик-культуры - в наличии тысячи штуковин по вашим любимым фильмам, сериалам, аниме, играм и мультикам.
+        Подарочный набор по любимому фандому - будь то Геншин, Наруто, Токийский гуль, Бродячие псы, Евангелион, Берсерк, Токийские мстители, Ван пис,
+        Клинок рассекающий демонов или Джо Джо - это лучший подарок анимешнику.</p>
+      <p class="end">Мы находимся в России, у нас есть филиалы в Новосибирске - на ул. Кирова 27, Красном проспекте 69 и пр. Карла Маркса 24а.
+        В Красноярске - на ул. Республики, 43.
+        И в Томске, на улице Елизаровых 43.
+        Мы доставляем - по городу, по России и в другие страны.</p>
     </div>
   </section>
 </template>
 <style scoped>
+.yes {
+  margin: 0 auto;
+  background: #AE445A;
+  border-radius: 10px;
+  text-align: center;
+  width: 235px;
+  height: 40px;
+  color: white;
+  font-size: 16px;
+}
+.no {
+  margin: 0 auto;
+  background: #f39f5a;
+  border: white 2px solid;
+  border-radius: 10px;
+  width: 235px;
+  text-align: center;
+  height: 40px;
+  color: white;
+  font-size: 16px;
+}
+.h {
+  width: 540px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding-top: 30px;
+  margin: 0 auto;
+  font-weight: 700
+}
 .end {
   font-size: 16px;
   font-weight: 400;
@@ -180,6 +217,10 @@ onMounted(async () => {
   text-align: center;
   font-weight: 400;
   transition: .15s linear all;
+  text-transform: uppercase;
+  margin-right: 10px;
+  padding: 10px;
+  cursor: pointer
 }
 .category2:hover {
   color: grey;

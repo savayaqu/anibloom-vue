@@ -57,11 +57,8 @@ const onInputChange = (field, event) => {
 <template>
   <main>
     <h1 class="reg">Регистрация</h1>
-
     <Form :submit="onSubmit" method="POST">
-
       <p v-if="isLoading">Загрузка...</p>
-
       <template v-else>
         <h2 class="reg">Введите информацию о вас, чтобы мы знали как к вам обращаться</h2>
         <div class="default">
@@ -144,12 +141,8 @@ const onInputChange = (field, event) => {
               @change="(event) => onInputChange('password', event)"
           />
         </div>
-
-
-
         <Button @submit.prevent="onSubmit" type="submit">Зарегистрироваться</Button>
       </template>
-
     </Form>
   </main>
 </template>

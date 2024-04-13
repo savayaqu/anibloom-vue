@@ -225,7 +225,6 @@ onMounted(async () => await load())
         </td>
       </tr>
     </table>
-
   </section>
   <div v-else>
     <h1>ТЕБЕ ТУТ НЕ РАДЫ</h1>

@@ -40,11 +40,9 @@ defineProps({
       :max=max
       :id="id">
 
-  <ul v-if="errorMessage.length">
-    <li class="errorMessage" v-for="message in errorMessage">
+    <p style="text-align: center" v-if="errorMessage.length" class="errorMessage" v-for="message in errorMessage">
       {{  message  }}
-    </li>
-  </ul>
+    </p>
   </div>
 </template>
 
@@ -54,6 +52,7 @@ defineProps({
   gap: 10px;
   flex-direction: column;
   align-items: flex-start;
+  width: 250px;
 }
 .input {
   border-radius: 5px;

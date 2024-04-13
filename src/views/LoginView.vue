@@ -56,7 +56,6 @@ const onInputChange = (field, event) => {
 <template>
   <main>
     <h1 class="auth">Авторизация</h1>
-
     <Form :submit="onSubmit" method="POST">
       <Loading v-if="isLoading"></Loading>
       <template v-else>
@@ -69,7 +68,6 @@ const onInputChange = (field, event) => {
             :error-message="errors.data?.login"
             @change="(event) => onInputChange('login', event)"
         />
-
         <FormItem
             id = "password"
             label="Введите пароль"
