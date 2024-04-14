@@ -5,6 +5,7 @@ defineProps({
   onChange: Function,
   label: String,
   placeholder: String,
+  required: String,
   type: {
     required: false,
     type: String,
@@ -38,8 +39,8 @@ defineProps({
       :placeholder="placeholder"
       :min=min
       :max=max
-      :id="id">
-
+      :id="id"
+      :required="required">
     <p style="text-align: center" v-if="errorMessage.length" class="errorMessage" v-for="message in errorMessage">
       {{  message  }}
     </p>

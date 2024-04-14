@@ -26,34 +26,44 @@ const dataModal = reactive({
 
 const handleAddReview = async () => {
   isLoading.value = true
-
   const response = await addReview(productId.value, data.newRating, data.newText);
-  console.log(response)
   if (response.message === "Отзыв успешно сохранен") {
     dataModal.success = response.message
     setTimeout(() => {
       dataModal.success = '';
     }, 3000);
+    await loadReviews(); // Обновляем отзывы после успешного добавления
   } else {
     dataModal.error = response.message
     setTimeout(() => {
       dataModal.error = '';
     }, 3000);
-
     if (response.code === 422 || response.code === 401) {
       data.errorMessages = response.errors || {};
     } else if (response.code === 404 || response.code === 403) {
       data.errorMessage = response.message;
+      await error();
     }
   }
-  await loadReviews(); // Обновляем отзывы после успешного добавления
-};
 
+};
+const error = async () => {
+  dataModal.error = 'Вы не можете оставить отзыв на товар, который вы не покупали'
+  setTimeout(() => {
+    dataModal.error = '';
+  }, 5000);
+}
 const loadReviews = async () => {
   reviews.value = await getReviews(productId.value);
 };
-const changeText = (e) => data.newText = e.target.value
-const changeRating = (e) => data.newRating = e.target.value
+const changeText = (e) => {
+ data.newText = e.target.value
+  data.errorMessages = ''
+}
+
+const changeRating = (e) => {
+  data.newRating = e.target.value
+}
 
 onMounted(async () => await loadReviews())
 const formatDate = (dateString) => {
@@ -66,43 +76,44 @@ const formatDate = (dateString) => {
 </script>
 
 <template>
-  <Modal v-if="dataModal.error !== '' || dataModal.success !== ''" :error="dataModal.error" :success="dataModal.success"></Modal>
-  <Form method="POST" :submit="handleAddReview">
-    <FormItem
-        @change="changeRating"
-        label="Рейтинг"
-        placeholder="Введите рейтинг"
-        type="number"
-        id="rating"
-        min=1
-        max=5
-        :value="data.newRating"
-        :error-message="data.errorMessages.rating"
-    >
-    </FormItem>
-    <FormItem
-        @change="changeText"
-        label="Ваш отзыв"
-        placeholder="Введите отзыв тут"
-        id="textReview"
-        :value="data.newText"
-        :error-message="data.errorMessages.textReview"
-    >
-    </FormItem>
-    <Button type="submit" :disabled="data.isLoading">Добавить отзыв</Button>
-  </Form>
-  <h3 class="review">Отзывы о товаре:</h3>
-  <section>
-    <div class="no" v-if="reviews.length === 0">Отзывов пока нет :(</div>
-    <div v-else>
-      <div class="review_div" v-for="review in reviews" :key="review.id">
-        <p class="name margin"><b>{{ review.user.login }}</b> - {{ formatDate(review.updated_at) }}</p>
-        <p class="rating margin">Рейтинг: {{ review.rating }}</p>
-        <p class="review_p margin">{{ review.textReview }}</p>
+  <div>
+    <Form method="POST" :submit="handleAddReview">
+      <FormItem
+          required
+          @change="changeRating"
+          label="Рейтинг"
+          placeholder="Введите рейтинг"
+          type="number"
+          id="rating"
+          min=1
+          max=5
+          :value="data.newRating"
+      >
+      </FormItem>
+      <FormItem
+          @change="changeText"
+          label="Ваш отзыв"
+          placeholder="Введите отзыв тут"
+          id="textReview"
+          :value="data.newText"
+          :error-message="data.errorMessages.textReview"
+      >
+      </FormItem>
+      <Button type="submit" :disabled="data.isLoading">Добавить отзыв</Button>
+    </Form>
+    <h3 class="review">Отзывы о товаре:</h3>
+    <section>
+      <div class="no" v-if="reviews.length === 0">Отзывов пока нет :(</div>
+      <div v-else>
+        <div class="review_div" v-for="review in reviews" :key="review.id">
+          <p class="name margin"><b>{{ review.user.login }}</b> - {{ formatDate(review.updated_at) }}</p>
+          <p class="rating margin">Рейтинг: {{ review.rating }}</p>
+          <p class="review_p margin">{{ review.textReview }}</p>
+        </div>
       </div>
-    </div>
-  </section>
-  <Modal v-if="dataModal.error !== '' || dataModal.success !== ''" :error="dataModal.error" :success="dataModal.success"></Modal>
+    </section>
+  </div>
+  <Modal  :error="dataModal.error" :success="dataModal.success"></Modal>
 </template>
 
 <style scoped>
